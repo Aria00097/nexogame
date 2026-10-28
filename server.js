@@ -16,19 +16,23 @@ const DATA_FILE = path.join(__dirname, "data.json");
 let db = { users: [], statuses: [], chat: [] };
 
 function load() {
-  if (fs.existsSync(DATA_FILE)) {
-    try {
+  try {
+    if (fs.existsSync(DATA_FILE)) {
       db = JSON.parse(fs.readFileSync(DATA_FILE, "utf8"));
       if (!db.statuses) db.statuses = [];
       if (!db.chat) db.chat = [];
-    } catch (e) {
-      console.error("Error al cargar data.json:", e);
     }
+  } catch (e) {
+    console.error("Aviso: Usando base de datos en memoria.", e);
   }
 }
 
 function save() {
-  fs.writeFileSync(DATA_FILE, JSON.stringify(db, null, 2));
+  try {
+    fs.writeFileSync(DATA_FILE, JSON.stringify(db, null, 2));
+  } catch (e) {
+    console.error("Aviso: No se pudo escribir en disco (modo memoria activo).");
+  }
 }
 
 load();
