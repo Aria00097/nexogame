@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NexoGame · Red Social Gamer</title>
+
+<!-- 🖼️ FAVICON / LOGO DE LA PESTAÑA DEL NAVEGADOR -->
+<link rel="icon" type="image/png" href="logo.png">
+
+<link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&family=Cormorant+Garamond:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<svg class="escena" viewBox="0 0 1280 720" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+  <defs>
+    <radialGradient id="halo"><stop offset="0" stop-color="#d4b8d0" stop-opacity=".45"/><stop offset="1" stop-color="#d4b8d0" stop-opacity="0"/></radialGradient>
+  </defs>
+  <g fill="#9c92a6" opacity="0.6">
+    <circle cx="120" cy="90" r="1.5"/><circle cx="260" cy="170" r="1"/><circle cx="410" cy="60" r="1.5"/>
+    <circle cx="560" cy="130" r="1"/><circle cx="700" cy="50" r="1.5"/><circle cx="880" cy="110" r="1"/>
+    <circle cx="1010" cy="200" r="1.5"/><circle cx="1180" cy="70" r="1"/><circle cx="330" cy="260" r="1"/>
+    <circle cx="1120" cy="300" r="1"/><circle cx="60" cy="310" r="1.5"/>
+  </g>
+  <circle cx="1000" cy="130" r="150" fill="url(#halo)"/>
+  <circle cx="1000" cy="130" r="58" fill="#f1e8cb"/>
+  <circle cx="1022" cy="118" r="52" fill="#201127" opacity=".35"/>
+  <path d="M0 560 L140 470 L290 540 L450 450 L620 540 L800 460 L980 545 L1130 480 L1280 540 V720 H0Z" fill="#140a1b"/>
+  <g fill="#0d0912">
+    <rect x="360" y="420" width="560" height="300"/>
+    <rect x="380" y="400" width="30" height="20"/><rect x="430" y="400" width="30" height="20"/>
+    <rect x="800" y="400" width="30" height="20"/><rect x="850" y="400" width="30" height="20"/>
+    <rect x="590" y="260" width="100" height="460"/>
+    <polygon points="580,262 640,110 700,262"/>
+    <rect x="636" y="80" width="8" height="32"/>
+    <rect x="330" y="330" width="64" height="390"/><polygon points="322,332 362,220 402,332"/>
+    <rect x="886" y="330" width="64" height="390"/><polygon points="878,332 918,220 958,332"/>
+  </g>
+  <path class="murcielago" transform="translate(0,0)" d="M0 150 q14 -16 28 0 q14 -16 28 0 q-14 4 -28 14 q-14 -10 -28 -14Z"/>
+  <path class="murcielago" d="M0 230 q10 -12 20 0 q10 -12 20 0 q-10 3 -20 10 q-10 -7 -20 -10Z"/>
+</svg>
+<div class="niebla"></div>
+
+<!-- BARRA DE NAVEGACIÓN SUPERIOR -->
+<header id="mainheader">
+  <div class="header-content">
+    <span class="logo">NexoGame</span>
+    
+    <!-- Navegación interna -->
+    <nav id="topnav" class="hide">
+      <button class="on" data-t="muro">🏠 Muro</button>
+      <button data-t="chat">💬 Chat Global</button>
+      <button data-t="perfil">👤 Mi Perfil</button>
+    </nav>
+
+    <!-- Acciones de sesión -->
+    <div class="header-actions">
+      <button id="out" class="btn-logout hide">Cerrar Sesión</button>
+    </div>
+  </div>
+</header>
+
+<!-- PANTALLA DE ACCESO (Login inicial) -->
+<main id="auth">
+  <div class="card auth-card">
+    <h2 class="auth-title">NexoGame</h2>
+    
+    <!-- ESPACIO PARA TU LOGO EN EL LOGIN -->
+    <div class="auth-logo-box">
+      <img src="logo.png" alt="Logo NexoGame" class="auth-logo-img">
+    </div>
+
+    <p style="text-align: center; color: var(--mu); margin-bottom: 20px; font-size: 15px;">Conecta con las almas del reino gótico</p>
+    <input id="u" placeholder="Usuario" autocomplete="username">
+    <input id="p" type="password" placeholder="Contraseña" autocomplete="current-password" style="margin-top:12px">
+    <div class="row" style="margin-top:20px;">
+      <button class="btn" id="login" style="flex:1;">Iniciar Sesión</button>
+      <a href="register.html" target="_blank" class="btn alt" style="flex:1; text-align:center; text-decoration:none; display:grid; place-items:center;">Crear cuenta</a>
+    </div>
+    <div id="err" class="err"></div>
+  </div>
+</main>
+
+<!-- INTERFAZ PRINCIPAL DE 3 COLUMNAS (ESTILO DISCORD) -->
+<div id="app" class="hide">
+  <div class="discord-container">
+    
+    <!-- COLUMNA IZQUIERDA: Reinos & Chats Privados -->
+    <aside class="sidebar-left">
+      <div class="card sidebar-card">
+        <h3 class="sidebar-title">Reinos & Canales</h3>
+        
+        <div class="realm-section">
+          <span class="section-label">🏰 Reinos Principales</span>
+          <div class="realm-list">
+            <div class="realm-item active">
+              <span class="realm-icon">🏰</span>
+              <span class="realm-name">Aethelgard</span>
+            </div>
+            <div class="realm-item">
+              <span class="realm-icon">🦇</span>
+              <span class="realm-name">Lunarys</span>
+            </div>
+            <div class="realm-item">
+              <span class="realm-icon">⚔️</span>
+              <span class="realm-name">Minecraft RP</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="realm-section">
+          <span class="section-label">💬 Chats Privados</span>
+          <div class="private-chats-list" id="privateChatsList">
+            <div class="chat-item">
+              <span class="chat-status online"></span>
+              <span class="chat-name">@valeria</span>
+            </div>
+            <div class="chat-item">
+              <span class="chat-status offline"></span>
+              <span class="chat-name">@lufas</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- COLUMNA CENTRAL: Feed / Secciones -->
+    <main class="feed-column">
+      
+      <!-- MURO / PUBLICACIONES -->
+      <section id="muro" class="tab-section">
+        <div class="card post-creator-box">
+          <div class="post-header-box" style="display: flex; gap: 10px; align-items: flex-start;">
+            <div class="mini-avatar">✠</div>
+            <textarea id="statusInput" rows="3" maxlength="500" placeholder="¿Qué susurran las sombras hoy?..."></textarea>
+          </div>
+
+          <div class="post-actions">
+            <label for="imageFileInput" class="btn-attach-img">
+              📷 Adjuntar Imagen
+            </label>
+            <input type="file" id="imageFileInput" accept="image/*" style="display: none;" />
+
+            <div id="imgPreviewContainer" class="img-preview-container" style="display: none;">
+              <img id="imgPreview" src="" alt="Vista previa" />
+              <button id="btnRemoveImg" type="button">✕</button>
+            </div>
+
+            <button class="btn" id="post">Publicar</button>
+          </div>
+        </div>
+
+        <div id="feed"></div>
+      </section>
+
+      <!-- CHAT EN VIVO GLOBAL -->
+      <section id="chat" class="tab-section hide">
+        <div class="card" style="padding: 15px;">
+          <h3 style="font-family: 'UnifrakturCook', serif; color: #d4b8d0; margin-bottom: 12px; font-size: 20px;">Chat del Reino</h3>
+          <div id="chatlog" class="chat-box"></div>
+          <div class="row" style="margin-top: 10px;">
+            <input id="cm" maxlength="300" placeholder="Escribe un mensaje en las sombras…">
+            <button class="btn" id="send">Enviar</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- PERFIL -->
+      <section id="perfil" class="tab-section hide">
+        <div class="card profile-card">
+          <div class="profile-header">
+            <div class="profile-avatar">✠</div>
+            <div style="flex:1;">
+              <label style="color:#d4b8d0; font-weight:600; font-size: 14px;">Apodo en el Reino</label>
+              <input id="nick" maxlength="24" style="margin-top:4px; margin-bottom:10px;">
+              <label style="display:block; color:#d4b8d0; font-weight:600; font-size: 14px;">Sobre mí / Biografía</label>
+              <textarea id="bio" rows="3" maxlength="160" style="margin-top:4px;"></textarea>
+              <div class="row" style="margin-top: 12px;"><button class="btn" id="save">Guardar Cambios</button><span id="ok" class="ts"></span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- COLUMNA DERECHA: Habitantes / Miembros -->
+    <aside class="sidebar-right">
+      <div class="card sidebar-card">
+        <h3 class="sidebar-title">Habitantes</h3>
+        <div class="members-header">CONECTADOS EN EL REINO</div>
+        <div id="people" class="members-list"></div>
+      </div>
+    </aside>
+
+  </div>
+</div>
+
+<!-- VENTANA EMERGENTE (MODAL/LIGHTBOX) PARA VER IMÁGENES EN TAMAÑO COMPLETO -->
+<div id="imageModal" class="image-modal hide" onclick="closeImageModal()">
+  <span class="close-modal-btn">&times;</span>
+  <img class="image-modal-content" id="fullModalImage" onclick="event.stopPropagation()">
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

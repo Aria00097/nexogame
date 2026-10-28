@@ -1,0 +1,509 @@
+:root {
+  --bg: #0d0912;
+  --card: rgba(22, 14, 28, 0.9);
+  --tx: #f0ebe1;
+  --mu: #9c92a6;
+  --ac: #732238;
+  --bd: #5a354f;
+  --me: #251224;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  min-height: 100vh;
+  background: radial-gradient(ellipse at 78% 18%, #362247 0%, #201127 38%, #0d0912 80%);
+  color: var(--tx);
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 17px;
+  overflow-x: hidden;
+}
+
+/* El castillo y las estrellas se quedan siempre al fondo de todo (Capa -1) */
+.escena { 
+  position: fixed; 
+  inset: 0; 
+  width: 100%; 
+  height: 100%; 
+  z-index: -1; 
+  pointer-events: none; 
+}
+.murcielago { fill: #130a17; animation: volar 22s linear infinite; }
+.murcielago:nth-of-type(2) { animation-duration: 30s; animation-delay: -12s; }
+@keyframes volar {
+  from { transform: translate(-120px, 0); }
+  to   { transform: translate(1400px, -60px); }
+}
+
+/* Encabezado fijo superior estilo red social */
+header {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(13,9,18,0.95);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--bd);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+}
+.header-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+header .logo {
+  font-family: "UnifrakturCook", serif;
+  font-size: 32px;
+  color: #d4b8d0;
+  letter-spacing: 1.5px;
+  text-shadow: 0 0 10px rgba(212, 184, 208, 0.2);
+}
+
+/* Navegación superior tipo pestañas modernas */
+nav {
+  display: flex;
+  gap: 8px;
+}
+nav button {
+  padding: 8px 16px;
+  border: 1px solid transparent;
+  background: rgba(255,255,255,0.03);
+  color: var(--mu);
+  font: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 20px;
+  transition: all 0.2s;
+}
+nav button:hover { background: rgba(115,34,56,0.2); color: var(--tx); }
+nav button.on { background: var(--ac); color: var(--tx); border-color: var(--bd); }
+
+.btn-logout {
+  background: transparent;
+  color: #d9889b;
+  border: 1px solid var(--bd);
+  border-radius: 6px;
+  padding: 6px 12px;
+  cursor: pointer;
+  font: inherit;
+  font-size: 14px;
+  transition: background 0.2s;
+}
+.btn-logout:hover { background: rgba(115,34,56,0.4); color: #fff; }
+
+/* Tarjetas Generales */
+.card {
+  background: var(--card);
+  border: 1px solid var(--bd);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 14px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+.card.me { background: var(--me); border-left: 4px solid var(--ac); }
+
+/* Creación de publicaciones estilo feed */
+.post-header-box { display: flex; gap: 12px; align-items: flex-start; }
+.mini-avatar {
+  width: 38px; height: 38px; border-radius: 50%;
+  background: radial-gradient(circle, #3b1d40 0%, #120816 100%);
+  border: 1px solid var(--bd);
+  display: grid; place-items: center; color: #d4b8d0; font-size: 16px; flex-shrink: 0;
+}
+
+/* Perfil */
+.profile-card { padding: 24px; }
+.profile-header { display: flex; gap: 20px; align-items: center; }
+.profile-avatar {
+  width: 70px; height: 70px; border-radius: 50%;
+  background: radial-gradient(circle, #3b1d40 0%, #120816 100%);
+  border: 2px solid var(--bd);
+  display: grid; place-items: center; font-size: 28px; color: #d4b8d0; flex-shrink: 0;
+}
+
+/* Pantalla de Autenticación con espacio para Logo */
+#auth {
+  display: flex; justify-content: center; align-items: center; min-height: 80vh;
+}
+.auth-card { width: 100%; max-width: 420px; padding: 30px; text-align: center; }
+.auth-title {
+  font-family: 'UnifrakturCook', serif;
+  font-size: 36px;
+  color: #d4b8d0;
+  margin-bottom: 10px;
+}
+.auth-logo-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px 0 15px 0;
+}
+.auth-logo-img {
+  max-width: 120px;
+  max-height: 120px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 8px rgba(212, 184, 208, 0.3));
+}
+
+.who { font-weight: 700; color: #d4b8d0; }
+.ts { color: var(--mu); font-size: 12px; margin-left: 6px; }
+
+textarea, input {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid var(--bd);
+  border-radius: 8px;
+  background: rgba(13,9,18,0.6);
+  color: var(--tx);
+  font: inherit;
+  font-size: 15px;
+  outline: none;
+}
+input:focus, textarea:focus { border-color: #d4b8d0; box-shadow: 0 0 0 2px rgba(90,53,79,.35); }
+input::placeholder, textarea::placeholder { color: var(--mu); }
+
+.row { display: flex; gap: 8px; align-items: center; }
+
+.btn {
+  padding: 8px 16px;
+  border: 1px solid var(--bd);
+  border-radius: 8px;
+  background: linear-gradient(to bottom, #732238, #3b111c);
+  color: var(--tx);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  transition: filter .2s;
+}
+.btn:hover { filter: brightness(1.2); }
+.btn.alt { background: var(--mu); color: #0d0912; }
+
+.chat-box { height: 45vh; overflow-y: auto; padding-right: 5px; display: flex; flex-direction: column; gap: 8px; }
+.msg { margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid rgba(90,53,79,0.2); }
+.err { color: #d9889b; margin-top: 8px; font-size: 14px; }
+.hide { display: none !important; }
+
+/* ==========================================================
+   🖼️ CAJA DE PUBLICACIONES Y ACCIONES DE IMAGEN
+   ========================================================== */
+
+.post-creator-box {
+  background: #150b1d;
+  border: 1px solid #4a1f59;
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.post-creator-box textarea {
+  width: 100%;
+  background: #0b0710;
+  border: 1px solid #361442;
+  color: #d8c3e5;
+  border-radius: 6px;
+  padding: 10px;
+  resize: vertical;
+  min-height: 80px;
+  font-family: inherit;
+  font-size: 0.95rem;
+}
+
+.post-creator-box textarea:focus {
+  outline: none;
+  border-color: #8b0000;
+}
+
+.post-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+  flex-wrap: wrap;
+  gap: 10px;
+  border-top: 1px solid rgba(90, 53, 79, 0.3);
+  padding-top: 10px;
+}
+
+.btn-attach-img {
+  display: inline-block;
+  padding: 6px 14px;
+  background: #23122b;
+  color: #d8c3e5;
+  border: 1px solid #5a2a68;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.btn-attach-img:hover {
+  background: #3b1c48;
+  border-color: #8b0000;
+}
+
+.img-preview-container {
+  position: relative;
+  display: inline-block;
+  margin-top: 5px;
+}
+
+.img-preview-container img {
+  max-width: 100px;
+  max-height: 100px;
+  border-radius: 6px;
+  border: 1px solid #8b0000;
+  object-fit: cover;
+  display: block;
+}
+
+.img-preview-container button {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background: #8b0000;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 22px;
+  height: 22px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ==========================================================
+   🎮 DISEÑO DE 3 COLUMNAS ESTILO DISCORD (ANCHO COMPLETO)
+   ========================================================== */
+
+.discord-container {
+  max-width: 98%;
+  margin: 15px auto;
+  padding: 0 10px;
+  display: grid;
+  grid-template-columns: 240px 1fr 260px;
+  gap: 18px;
+  align-items: start;
+}
+
+.feed-column {
+  width: 100%;
+  max-width: 100%;
+}
+
+@media (max-width: 1024px) {
+  .discord-container {
+    grid-template-columns: 220px 1fr;
+  }
+  .sidebar-right {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .discord-container {
+    grid-template-columns: 1fr;
+  }
+  .sidebar-left, .sidebar-right {
+    display: none;
+  }
+}
+
+.sidebar-title {
+  color: #d4b8d0;
+  font-family: 'UnifrakturCook', serif;
+  font-size: 20px;
+  border-bottom: 1px solid var(--bd);
+  padding-bottom: 8px;
+  margin-bottom: 14px;
+}
+
+.section-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--mu);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin: 12px 0 8px 4px;
+}
+
+.realm-list, .private-chats-list {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.realm-item, .chat-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: rgba(13, 9, 18, 0.4);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 14px;
+}
+
+.realm-item:hover, .chat-item:hover {
+  background: rgba(115, 34, 56, 0.25);
+  border-color: rgba(90, 53, 79, 0.5);
+  transform: translateX(2px);
+}
+
+.realm-item.active {
+  background: rgba(115, 34, 56, 0.5);
+  border-color: var(--bd);
+  font-weight: 600;
+}
+
+.realm-icon {
+  font-size: 16px;
+}
+
+.chat-status {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.chat-status.online {
+  background-color: #2ec4b6;
+  box-shadow: 0 0 6px rgba(46, 196, 182, 0.6);
+}
+
+.chat-status.offline {
+  background-color: #6c757d;
+}
+
+.members-header {
+  font-size: 11px;
+  font-weight: bold;
+  color: var(--mu);
+  letter-spacing: 0.5px;
+  margin-bottom: 10px;
+}
+
+.members-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.members-list .card {
+  margin-bottom: 0 !important;
+  padding: 10px !important;
+  background: rgba(13, 9, 18, 0.5);
+  border: 1px solid rgba(90, 53, 79, 0.3);
+  transition: background 0.2s;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.members-list .card:hover {
+  background: rgba(35, 18, 43, 0.8);
+  border-color: var(--bd);
+}
+
+.members-list .who {
+  color: #e2c0de;
+  font-size: 14px;
+}
+
+.members-list div {
+  font-size: 12px;
+  color: var(--mu);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ==========================================================
+   🖼️ IMÁGENES EN EL MURO Y MODAL FLOTANTE (LIGHTBOX)
+   ========================================================== */
+
+.post-image-container {
+  width: 100%;
+  margin-top: 12px;
+  margin-bottom: 12px;
+  background-color: #0b0710;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid rgba(139, 0, 0, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.post-image {
+  width: 100%;
+  max-height: 420px;
+  object-fit: contain;
+  background-color: rgba(5, 3, 7, 0.8);
+  display: block;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: filter 0.2s ease, transform 0.2s ease;
+}
+
+.post-image:hover {
+  filter: brightness(1.15);
+}
+
+/* Fondo oscuro de la ventana flotante */
+.image-modal {
+  position: fixed;
+  z-index: 1000;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(5, 3, 10, 0.92);
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 1;
+  transition: opacity 0.25s ease;
+}
+
+.image-modal.hide {
+  display: none !important;
+}
+
+/* Foto maximizada en la ventana flotante */
+.image-modal-content {
+  max-width: 90vw;
+  max-height: 90vh;
+  object-fit: contain;
+  border-radius: 8px;
+  border: 1px solid var(--bd);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.9);
+}
+
+/* Botón 'X' para cerrar arriba a la derecha */
+.close-modal-btn {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  color: #d4b8d0;
+  font-size: 38px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.2s;
+  user-select: none;
+}
+
+.close-modal-btn:hover {
+  color: #ff4d6d;
+}

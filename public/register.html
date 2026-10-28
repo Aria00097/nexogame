@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Plugger · Registro en el Reino</title>
+<!-- Nota de cambios - register.html: Muestra el código de revisión directamente en la interfaz web -->
+<link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&family=Cormorant+Garamond:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<svg class="escena" viewBox="0 0 1280 720" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+  <defs>
+    <radialGradient id="halo"><stop offset="0" stop-color="#d4b8d0" stop-opacity=".45"/><stop offset="1" stop-color="#d4b8d0" stop-opacity="0"/></radialGradient>
+  </defs>
+  <g fill="#9c92a6" opacity="0.6">
+    <circle cx="120" cy="90" r="1.5"/><circle cx="260" cy="170" r="1"/><circle cx="410" cy="60" r="1.5"/>
+    <circle cx="560" cy="130" r="1"/><circle cx="700" cy="50" r="1.5"/><circle cx="880" cy="110" r="1"/>
+    <circle cx="1010" cy="200" r="1.5"/><circle cx="1180" cy="70" r="1"/><circle cx="330" cy="260" r="1"/>
+    <circle cx="1120" cy="300" r="1"/><circle cx="60" cy="310" r="1.5"/>
+  </g>
+  <circle cx="1000" cy="130" r="150" fill="url(#halo)"/>
+  <circle cx="1000" cy="130" r="58" fill="#f1e8cb"/>
+  <circle cx="1022" cy="118" r="52" fill="#201127" opacity=".35"/>
+  <path d="M0 560 L140 470 L290 540 L450 450 L620 540 L800 460 L980 545 L1130 480 L1280 540 V720 H0Z" fill="#140a1b"/>
+  <g fill="#0d0912">
+    <rect x="360" y="420" width="560" height="300"/>
+    <rect x="380" y="400" width="30" height="20"/><rect x="430" y="400" width="30" height="20"/>
+    <rect x="800" y="400" width="30" height="20"/><rect x="850" y="400" width="30" height="20"/>
+    <rect x="590" y="260" width="100" height="460"/>
+    <polygon points="580,262 640,110 700,262"/>
+    <rect x="636" y="80" width="8" height="32"/>
+    <rect x="330" y="330" width="64" height="390"/><polygon points="322,332 362,220 402,332"/>
+    <rect x="886" y="330" width="64" height="390"/><polygon points="878,332 918,220 958,332"/>
+  </g>
+  <path class="murcielago" transform="translate(0,0)" d="M0 150 q14 -16 28 0 q14 -16 28 0 q-14 4 -28 14 q-14 -10 -28 -14Z"/>
+  <path class="murcielago" d="M0 230 q10 -12 20 0 q10 -12 20 0 q-10 3 -20 10 q-10 -7 -20 -10Z"/>
+</svg>
+<div class="niebla"></div>
+
+<header>
+  <span class="logo">NexoGame</span>
+  <small>Registro de Nuevas Almas</small>
+</header>
+
+<main id="auth">
+  <div class="card">
+    <h2 style="font-family: 'UnifrakturCook', serif; font-size: 28px; color: #d4b8d0; text-align: center; margin-bottom: 16px;">Crear Cuenta</h2>
+    
+    <div id="step1">
+      <input id="email" type="email" placeholder="Correo electrónico" autocomplete="email" style="margin-bottom:12px">
+      <input id="u" placeholder="Nombre de usuario" autocomplete="username" style="margin-bottom:12px">
+      <input id="p" type="password" placeholder="Contraseña (mínimo 6 caracteres)" autocomplete="new-password">
+      <div class="row" style="margin-top:16px;">
+        <button class="btn" id="regBtn" style="flex:1;">Registrarse</button>
+      </div>
+    </div>
+
+    <div id="step2" class="hide">
+      <div style="background: rgba(115,34,56,0.3); border: 1px solid var(--bd); padding: 12px; border-radius: 6px; margin-bottom: 14px; text-align: center; color: #f0ebe1; font-size: 15px;">
+        ⚠️ <strong>Tu correo está en revisión.</strong><br>
+        Se ha generado tu código de acceso.<br>
+        <span id="debugCode" style="display:inline-block; margin-top:8px; font-size: 22px; font-weight:bold; color:#d4b8d0; letter-spacing: 2px; background: rgba(0,0,0,0.4); padding: 4px 12px; border-radius: 4px;"></span>
+      </div>
+      <input id="code" placeholder="Ingresa el código" maxlength="4" style="text-align:center; font-size: 20px; letter-spacing: 4px; margin-bottom:12px;">
+      <div class="row" style="margin-top:16px;">
+        <button class="btn" id="verifyBtn" style="flex:1;">Finalizar Creación</button>
+      </div>
+    </div>
+
+    <div id="err" class="err"></div>
+  </div>
+</main>
+
+<script>
+  let registeredUser = "";
+
+  document.getElementById("regBtn").onclick = async () => {
+    const email = document.getElementById("email").value.trim();
+    const user = document.getElementById("u").value.trim();
+    const pass = document.getElementById("p").value;
+    const err = document.getElementById("err");
+    err.textContent = "";
+
+    try {
+      const r = await fetch("/api/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, user, pass })
+      });
+      const data = await r.json();
+      if (!r.ok) throw new Error(data.error);
+      
+      registeredUser = user;
+      
+      // Mostrar el código directamente en pantalla para no depender de la terminal
+      document.getElementById("debugCode").textContent = data.code;
+
+      document.getElementById("step1").classList.add("hide");
+      document.getElementById("step2").classList.remove("hide");
+    } catch (e) {
+      err.textContent = e.message;
+    }
+  };
+
+  document.getElementById("verifyBtn").onclick = async () => {
+    const code = document.getElementById("code").value.trim();
+    const err = document.getElementById("err");
+    err.textContent = "";
+
+    try {
+      const r = await fetch("/api/verify", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ user: registeredUser, code })
+      });
+      const data = await r.json();
+      if (!r.ok) throw new Error(data.error);
+      
+      localStorage.setItem("plugger_token", data.token);
+      alert("¡Cuenta verificada y creada con éxito en el reino!");
+      window.location.href = "/";
+    } catch (e) {
+      err.textContent = e.message;
+    }
+  };
+</script>
+</body>
+</html>
